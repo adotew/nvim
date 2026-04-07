@@ -314,7 +314,6 @@ require('lazy').setup({
       delay = 0,
       icons = { mappings = vim.g.have_nerd_font },
 
-      -- Document existing key chains
       spec = {
         { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
         { '<leader>t', group = '[T]oggle' },
@@ -323,6 +322,8 @@ require('lazy').setup({
         { '<leader>x', group = 'Diagnostics' },
         { '<leader>q', group = 'Session' },
         { '<leader>w', group = '[W]indow' },
+        { '<leader>a', group = '[A]I' },
+        { '<leader>d', group = '[D]ashboard' },
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
       },
     },
