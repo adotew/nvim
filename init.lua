@@ -741,6 +741,10 @@ require('lazy').setup({
           sidebars = 'transparent',
           floats = 'transparent',
         },
+        on_highlights = function(hl, _)
+          hl.WinBar = { bg = 'NONE' }
+          hl.WinBarNC = { bg = 'NONE' }
+        end,
       }
 
       -- Load the colorscheme here.
