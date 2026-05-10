@@ -7,6 +7,15 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+-- Disable statusbar completely (run after plugins load)
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    vim.o.laststatus = 0
+    vim.o.ruler = false
+    vim.o.showcmd = false
+  end,
+})
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -21,8 +30,8 @@ vim.o.relativenumber = true
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
 
--- Don't show the mode, since it's already in the status line
-vim.o.showmode = false
+-- Mode is shown via noice.nvim in the center of the screen
+-- vim.o.showmode = false
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -71,7 +80,7 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
+vim.o.scrolloff = 0
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -741,9 +750,19 @@ require('lazy').setup({
           sidebars = 'transparent',
           floats = 'transparent',
         },
-        on_highlights = function(hl, _)
+        on_highlights = function(hl, c)
           hl.WinBar = { bg = 'NONE' }
           hl.WinBarNC = { bg = 'NONE' }
+          -- Mode message colors for noice
+          hl.NoiceMiniNormal = { fg = c.blue, bold = true }
+          hl.NoiceMiniInsert = { fg = c.green, bold = true }
+          hl.NoiceMiniVisual = { fg = c.purple, bold = true }
+          hl.NoiceMiniReplace = { fg = c.yellow, bold = true }
+          -- Border colors to match text
+          hl.NoiceMiniNormalBorder = { fg = c.blue }
+          hl.NoiceMiniInsertBorder = { fg = c.green }
+          hl.NoiceMiniVisualBorder = { fg = c.purple }
+          hl.NoiceMiniReplaceBorder = { fg = c.yellow }
         end,
       }
 
