@@ -110,7 +110,7 @@ vim.diagnostic.config {
   jump = { float = true },
 }
 
-vim.keymap.set('n', '<leader>xq', vim.diagnostic.setloclist, { desc = 'Open [Q]uickfix Diagnostics' })
+vim.keymap.set('n', '<leader>xl', vim.diagnostic.setloclist, { desc = 'Open [L]ocation List Diagnostics' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
