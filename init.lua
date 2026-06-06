@@ -30,8 +30,8 @@ vim.o.relativenumber = true
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
 
--- Mode is shown via noice.nvim in the center of the screen
--- vim.o.showmode = false
+-- Keep showmode enabled so noice.nvim can intercept mode-change messages.
+vim.o.showmode = true
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -479,6 +479,9 @@ require('lazy').setup({
           --  Most Language Servers support renaming across files, etc.
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
 
+          -- Show documentation for the symbol under the cursor.
+          map('K', vim.lsp.buf.hover, 'Hover Documentation')
+
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
           map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
@@ -522,6 +525,10 @@ require('lazy').setup({
           -- This may be unwanted, since they displace some of your code
           if client and client:supports_method('textDocument/inlayHint', event.buf) then
             map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '[T]oggle Inlay [H]ints')
+          end
+
+          if client and client:supports_method('textDocument/signatureHelp', event.buf) then
+            map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help', 'i')
           end
         end,
       })
@@ -635,7 +642,7 @@ require('lazy').setup({
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
+
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
       },
     },
@@ -739,37 +746,40 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+   "catppuccin/nvim", name = "catppuccin", priority = 1000,
     config = function()
       ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        transparent = true,
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-          sidebars = 'transparent',
-          floats = 'transparent',
+      require('catppuccin').setup {
+        flavour = 'mocha',
+        transparent_background = true,
+        float = {
+          transparent = true,
         },
-        on_highlights = function(hl, c)
-          hl.WinBar = { bg = 'NONE' }
-          hl.WinBarNC = { bg = 'NONE' }
-          -- Mode message colors for noice
-          hl.NoiceMiniNormal = { fg = c.blue, bold = true }
-          hl.NoiceMiniInsert = { fg = c.green, bold = true }
-          hl.NoiceMiniVisual = { fg = c.purple, bold = true }
-          hl.NoiceMiniReplace = { fg = c.yellow, bold = true }
-          -- Border colors to match text
-          hl.NoiceMiniNormalBorder = { fg = c.blue }
-          hl.NoiceMiniInsertBorder = { fg = c.green }
-          hl.NoiceMiniVisualBorder = { fg = c.purple }
-          hl.NoiceMiniReplaceBorder = { fg = c.yellow }
+        styles = {
+          comments = {}, -- Disable italics in comments
+        },
+        custom_highlights = function(c)
+          return {
+            WinBar = { bg = 'NONE' },
+            WinBarNC = { bg = 'NONE' },
+            -- Mode message colors for noice
+            NoiceMiniNormal = { fg = c.blue, bold = true },
+            NoiceMiniInsert = { fg = c.green, bold = true },
+            NoiceMiniVisual = { fg = c.mauve, bold = true },
+            NoiceMiniReplace = { fg = c.yellow, bold = true },
+            -- Border colors to match text
+            NoiceMiniNormalBorder = { fg = c.blue },
+            NoiceMiniInsertBorder = { fg = c.green },
+            NoiceMiniVisualBorder = { fg = c.mauve },
+            NoiceMiniReplaceBorder = { fg = c.yellow },
+          }
         end,
       }
 
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
