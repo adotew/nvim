@@ -312,7 +312,11 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua',
         'prettierd',
+        'prettier',
         'ruff',
+        'eslint_d',
+        'markdownlint',
+        'clang-format',
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -354,7 +358,6 @@ require('lazy').setup({
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
         typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        rust = { 'rustfmt' },
         c = { 'clang-format' },
       },
     },
