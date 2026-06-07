@@ -13,6 +13,9 @@ return {
     },
     opts = {
       lazygit = {},
+      scroll = {
+        enabled = true,
+      },
       dashboard = {
         pane_gap = 12,
         sections = {

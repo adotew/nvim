@@ -95,6 +95,14 @@ vim.o.confirm = true
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+vim.keymap.set({ 'n', 'i', 's' }, '<C-f>', function()
+  if not require('noice.lsp').scroll(4) then return '<C-f>' end
+end, { silent = true, expr = true })
+
+vim.keymap.set({ 'n', 'i', 's' }, '<C-b>', function()
+  if not require('noice.lsp').scroll(-4) then return '<C-b>' end
+end, { silent = true, expr = true })
+
 -- Diagnostic Config & Keymaps
 -- See :help vim.diagnostic.Opts
 vim.diagnostic.config {
@@ -547,9 +555,7 @@ require('lazy').setup({
             map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '[T]oggle Inlay [H]ints')
           end
 
-          if client and client:supports_method('textDocument/signatureHelp', event.buf) then
-            map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help', 'i')
-          end
+          if client and client:supports_method('textDocument/signatureHelp', event.buf) then map('<C-k>', vim.lsp.buf.signature_help, 'Signature Help', 'i') end
         end,
       })
 
@@ -766,7 +772,9 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-   "catppuccin/nvim", name = "catppuccin", priority = 1000,
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require('catppuccin').setup {
