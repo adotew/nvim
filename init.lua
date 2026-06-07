@@ -44,6 +44,7 @@ vim.o.breakindent = true
 
 -- Enable undo/redo changes even after closing and reopening a file
 vim.o.undofile = true
+vim.o.autoread = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
@@ -109,6 +110,25 @@ vim.diagnostic.config {
   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
   jump = { float = true },
 }
+
+local autoread_augroup = vim.api.nvim_create_augroup('kickstart-autoread', { clear = true })
+
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI', 'TermClose' }, {
+  group = autoread_augroup,
+  callback = function()
+    if vim.fn.mode() == 'c' or vim.fn.getcmdwintype() ~= '' then return end
+    if vim.bo.buftype ~= '' or vim.api.nvim_buf_get_name(0) == '' then return end
+
+    vim.cmd 'checktime'
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileChangedShellPost', {
+  group = autoread_augroup,
+  callback = function()
+    vim.notify('File reloaded from disk.', vim.log.levels.INFO, { title = 'Neovim' })
+  end,
+})
 
 vim.keymap.set('n', '<leader>xl', vim.diagnostic.setloclist, { desc = 'Open [L]ocation List Diagnostics' })
 
