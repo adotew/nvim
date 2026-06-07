@@ -17,6 +17,7 @@ vim.o.relativenumber = true
 vim.o.mouse = 'a'
 
 vim.o.showmode = true
+vim.o.cmdheight = 1
 
 vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 

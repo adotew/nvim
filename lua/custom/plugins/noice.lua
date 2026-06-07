@@ -11,10 +11,10 @@ return {
     },
     opts = {
       cmdline = {
-        enabled = true,
-        view = 'cmdline_popup',
+        enabled = false,
+        view = 'cmdline',
       },
-      messages = { enabled = true },
+      messages = { enabled = false },
       popupmenu = {
         enabled = false,
         backend = 'nui',
@@ -37,24 +37,7 @@ return {
         inc_rename = false,
         lsp_doc_border = true,
       },
-      routes = {
-        {
-          view = 'mini_normal',
-          filter = { event = 'msg_showmode', find = 'NORMAL' },
-        },
-        {
-          view = 'mini_insert',
-          filter = { event = 'msg_showmode', find = 'INSERT' },
-        },
-        {
-          view = 'mini_visual',
-          filter = { event = 'msg_showmode', find = 'VISUAL' },
-        },
-        {
-          view = 'mini_replace',
-          filter = { event = 'msg_showmode', find = 'REPLACE' },
-        },
-      },
+      routes = {},
       views = {
         mini_normal = {
           backend = 'mini',
@@ -121,20 +104,6 @@ return {
             winhighlight = {
               Normal = 'NoiceMiniReplace',
               FloatBorder = 'NoiceMiniReplaceBorder',
-            },
-          },
-        },
-        cmdline_popup = {
-          position = { row = '50%', col = '50%' },
-          size = { width = 60, height = 'auto' },
-          border = {
-            style = 'rounded',
-            padding = { 0, 1 },
-          },
-          win_options = {
-            winhighlight = {
-              Normal = 'NormalFloat',
-              FloatBorder = 'FloatBorder',
             },
           },
         },
