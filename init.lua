@@ -415,6 +415,7 @@ require('lazy').setup({
           return {
             WinBar = { bg = 'NONE' },
             WinBarNC = { bg = 'NONE' },
+            NotifyBackground = { bg = c.base },
             NoiceMiniNormal = { fg = c.blue, bold = true },
             NoiceMiniInsert = { fg = c.green, bold = true },
             NoiceMiniVisual = { fg = c.mauve, bold = true },

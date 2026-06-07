@@ -16,7 +16,7 @@ return {
       },
       messages = { enabled = true },
       popupmenu = {
-        enabled = true,
+        enabled = false,
         backend = 'nui',
       },
       notify = { enabled = false },
