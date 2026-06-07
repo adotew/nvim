@@ -1,6 +1,3 @@
----@module 'lazy'
----@type LazySpec
-
 return {
   {
     'folke/noice.nvim',
@@ -12,8 +9,6 @@ return {
     keys = {
       { '<leader>nd', '<cmd>NoiceDismiss<cr>', desc = 'Dismiss Noice' },
     },
-    ---@module 'noice'
-    ---@type NoiceConfig
     opts = {
       cmdline = {
         enabled = true,
